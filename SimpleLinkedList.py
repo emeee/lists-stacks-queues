@@ -1,23 +1,8 @@
-class Node:
-    def __init__(self, val, nextNode=None):
-        self.val = val
-        self.nextNode = nextNode
-
-    def setVal(self, val):
-        self.val = val
-
-    def getVal(self):
-        return self.val
-
-    def setNextNode(self, nextNode):
-        self.nextNode = nextNode
-
-    def getNextNode(self):
-        return self.nextNode
+from node import Node
 
 class SinglyLinkedList:
     def __init__(self):
-        self.first = first
+        self.first = None
         self.size = 0
 
     def isEmpty(self):
@@ -31,19 +16,32 @@ class SinglyLinkedList:
         if self.isEmpty():
             self.first = node
         else:
-            aux = self.first
-            while aux.getNextNode():
-                aux = aux.getNextNode()
-            aux = aux.setNextNode(node)
-        self.aux = self.aux + 1
+            current = self.first
+            while current.getNextNode():
+                current = current.getNextNode()
+            current = current.setNextNode(node)
+        self.size += 1
 
     def get(self, pos):
-        aux = self.first
+        current = self.first
         i = 0
-        while i<=pos and aux.getNextNode():
-            aux = aux.getNextNode()
-            i = i + 1
-        return aux.getVal()
+        if pos > self.size-1: raise 'Out of bounds'
+        while i<pos:
+            current = current.getNextNode()
+            i += 1
+        return current.getVal()
 
     def delete(self, pos):
-        #TODO
+        current = self.first
+        if pos == 0:
+            self.first = current.getNextNode()
+        else:
+            i = 0
+            if pos > self.size-1: raise 'Out of bounds'
+            while i<pos:
+                previous = current
+                current = current.getNextNode()
+                i += 1
+            later = current.getNextNode()
+            previous.setNextNode(later)
+        self.size -= 1
